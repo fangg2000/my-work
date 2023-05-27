@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.ChatGroupMapper">
+
+	<resultMap id="ChatGroupMap" type="com.fangg.bean.chat.query.ChatGroup">
+		<id column="chat_group_id" jdbcType="INTEGER" property="chatGroupId" />
+		<result column="chat_group_name" jdbcType="VARCHAR" property="chatGroupName" />
+		<result column="chat_group_code" jdbcType="VARCHAR" property="chatGroupCode" />
+		<result column="group_master" jdbcType="VARCHAR" property="groupMaster" />
+		<result column="group_member" jdbcType="VARCHAR" property="groupMember" />
+		<result column="group_grade" jdbcType="INTEGER" property="groupGrade" />
+		<result column="group_apply" jdbcType="VARCHAR" property="groupApply" />
+		<result column="apply_condition" jdbcType="INTEGER" property="applyCondition" />
+		<result column="group_limit" jdbcType="INTEGER" property="groupLimit" />
+		<result column="group_type" jdbcType="INTEGER" property="groupType" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="profile_picture" jdbcType="VARCHAR" property="profilePicture" />
+		<result column="group_sign" jdbcType="VARCHAR" property="groupSign" />
+	</resultMap>
+
+	<insert id="insertChatGroupByBatch" parameterType="java.util.List">
+		insert into chat_group (chat_group_name, chat_group_code,
+		group_master, group_member, group_grade, group_apply, 
+		apply_condition, group_limit, group_type, profile_picture, 
+		create_time,group_sign)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.chatGroupName,jdbcType=VARCHAR},
+			#{item.chatGroupCode,jdbcType=VARCHAR},
+			#{item.groupMaster,jdbcType=VARCHAR},
+			#{item.groupMember,jdbcType=VARCHAR},
+			#{item.groupGrade}, #{item.groupApply}, #{item.applyCondition}, 
+			#{item.groupLimit}, #{item.groupType}, #{item.profilePicture},
+			#{item.createTime,jdbcType=TIMESTAMP}, #{item.groupSign})
+		</foreach>
+	</insert>
+	
+	<select id="selectChatGroupByPage" parameterType="com.fangg.bean.chat.vo.ChatGroupVO" resultType="com.fangg.bean.chat.query.ChatGroup">
+		select 
+			chat_group_id,
+			chat_group_code,
+			chat_group_name,
+			create_time,
+			group_limit,
+			group_member,
+			apply_condition,
+			group_type,
+			group_sign
+		from chat_group 
+		<where>
+			<if test="chatGroupCode != null and chatGroupCode != ''">
+				chat_group_name=#{chatGroupCode} or chat_group_code=#{chatGroupCode}
+			</if>
+			<if test="groupType != null">
+				and group_type=#{groupType}
+			</if>
+			<if test="chatGroupId != null">
+				and chat_group_id &gt; #{chatGroupId}
+			</if>
+		</where>
+		order by chat_group_id asc 
+		limit #{pageSize}
+	</select>
+	
+	<!-- 查询多个群信息 -->
+	<select id="selectChatGroupByIn" parameterType="java.util.List" resultType="com.fangg.bean.chat.query.ChatGroup">
+		select 
+			chat_group_id,
+			chat_group_code,
+			chat_group_name,
+			create_time,
+			group_limit,
+			group_member,
+			apply_condition,
+			group_type,
+			group_sign
+		from chat_group 
+		WHERE chat_group_code IN
+		<foreach collection="list" item="chatGroupCode" index="index" open="(" close=")" separator=",">
+		  #{chatGroupCode}
+		</foreach>
+	</select>
+
+</mapper>

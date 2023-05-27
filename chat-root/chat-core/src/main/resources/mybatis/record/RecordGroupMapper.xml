@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.record.RecordGroupMapper">
+
+	<resultMap id="RecordGroupMap" type="com.fangg.bean.chat.query.record.RecordGroup">
+		<id column="record_group_id" jdbcType="INTEGER" property="recordGroupId" />
+		<result column="user_code" jdbcType="VARCHAR" property="userCode" />
+		<result column="group_name" jdbcType="VARCHAR" property="groupName" />
+		<result column="group_code" jdbcType="VARCHAR" property="groupCode" />
+	</resultMap>
+	
+	<!-- 批量新增分组 -->
+	<insert id="insertRecordGroupByBatch" parameterType="java.util.List">
+		insert into record_group (user_code, group_name,
+		group_code)
+		values
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{item.userCode,jdbcType=VARCHAR},
+			#{item.groupName,jdbcType=VARCHAR},
+			#{item.groupCode,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.UserConfigMapper">
+
+	<resultMap id="BaseResultMap" type="com.fangg.bean.chat.query.UserConfig">
+		<id column="config_id" jdbcType="INTEGER" property="configId" />
+		<result column="user_code" jdbcType="VARCHAR" property="userCode" />
+		<result column="show_ball" jdbcType="INTEGER" property="showBall" />
+		<result column="ball_show_seconds" jdbcType="INTEGER" property="ballShowSeconds" />
+		<result column="stranger_contact" jdbcType="INTEGER" property="strangerContact" />
+		<result column="grade" jdbcType="INTEGER" property="grade" />
+		<result column="pp_avtive_type" jdbcType="INTEGER" property="ppAvtiveType" />
+		<result column="out_confirm" jdbcType="INTEGER" property="outConfirm" />
+		<result column="bind_ip" jdbcType="VARCHAR" property="bindIp" />
+		<result column="black_list" jdbcType="VARCHAR" property="blackList" />
+		<result column="over_time" jdbcType="TIMESTAMP" property="overTime" />
+	</resultMap>
+	
+	<!-- 新增用户默认配置 -->
+	<insert id="insertUserConfigByDefault" parameterType="com.fangg.bean.chat.vo.UserConfigVO">
+		insert into user_config (user_code, bind_ip) value (#{userCode}, #{bindIp})
+	</insert>
+	
+	<insert id="insertUserConfigByBatch" parameterType="java.util.List">
+		insert into user_config (user_code, bind_ip)
+		values
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{item.userCode,jdbcType=VARCHAR}, #{item.bindIp})
+		</foreach>
+	</insert>
+	
+	<!-- 登录时获取用户相关配置 -->
+	<select id="selectUserConfigInfoForLogin" parameterType="com.fangg.bean.chat.vo.SysUserVO" resultType="com.fangg.bean.chat.to.UserConfigTO"> 
+		SELECT 
+			su.user_id,
+			su.user_code,
+			su.username,
+			su.profile_picture,
+			su.user_sign,
+			su.user_type,
+			su.age,
+			su.sex,
+			su.province,
+			su.city,
+			su.online_status,
+			su.like_num,
+			uc.config_id,
+			IFNULL(uc.show_ball,0) AS showBall,
+			IFNULL(uc.ball_show_seconds,0) AS ballShowSeconds,
+			IFNULL(uc.stranger_contact,0) AS strangerContact,
+			IFNULL(uc.pp_avtive_type,0) AS ppAvtiveType
+		FROM sys_user su 
+		LEFT JOIN user_config uc ON uc.user_code=su.user_code
+		WHERE su.user_code=#{userCode} AND su.delete_flag=0 AND su.`status`=0
+	</select>
+	
+	<!-- 更新配置信息 -->
+	<update id="updateUserConfigInfo" parameterType="com.fangg.bean.chat.vo.UserConfigVO">
+		update user_config
+		<set>
+			<if test="showBall != null">
+				show_ball = #{showBall},
+			</if>
+			<if test="ballShowSeconds != null">
+				ball_show_seconds = #{ballShowSeconds},
+			</if>
+			<if test="strangerContact != null">
+				stranger_contact = #{strangerContact},
+			</if>
+			<if test="ppAvtiveType != null">
+				pp_avtive_type = #{ppAvtiveType},
+			</if>
+			<if test="outConfirm != null">
+				out_confirm = #{outConfirm},
+			</if>
+			<if test="bindIp != null">
+				bind_ip = #{bindIp},
+			</if>
+			<if test="blackList != null">
+				black_list = #{blackList},
+			</if>
+		</set>
+		where user_code = #{userCode}
+	</update>
+	
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.SysUserMapper">
+
+	<resultMap id="SysUserMap" type="com.fangg.bean.chat.query.SysUser">
+		<id column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="user_code" jdbcType="VARCHAR" property="userCode" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="salt" jdbcType="VARCHAR" property="salt" />
+		<result column="ticket" jdbcType="VARCHAR" property="ticket" />
+		<result column="role_id" jdbcType="INTEGER" property="roleId" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="online_status" jdbcType="INTEGER" property="onlineStatus" />
+		<result column="mobile" jdbcType="VARCHAR" property="mobile" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
+		<result column="sex" jdbcType="INTEGER" property="sex" />
+		<result column="user_sign" jdbcType="VARCHAR" property="userSign" />
+		<result column="profile_picture" jdbcType="VARCHAR" property="profilePicture" />
+		<result column="user_type" jdbcType="INTEGER" property="userType" />
+		<result column="age" jdbcType="INTEGER" property="age" />
+		<result column="like_num" jdbcType="INTEGER" property="likeNum" />
+		<result column="country" jdbcType="VARCHAR" property="country" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="province" jdbcType="VARCHAR" property="province" />
+		<result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+		<result column="login_type" jdbcType="INTEGER" property="loginType" />
+		<result column="login_again" jdbcType="INTEGER" property="loginAgain" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+	</resultMap>
+	
+	<insert id="insertUserByBatch" parameterType="java.util.List">
+		insert into sys_user (user_code, username,
+		password, salt, ticket, role_id,
+		status, online_status, mobile,
+		create_time, sex, user_sign, profile_picture, user_type, 
+		province, city, country, age, like_num, login_ip, login_type, 
+		login_again, email)
+		values
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{item.userCode,jdbcType=VARCHAR},
+			#{item.username,jdbcType=VARCHAR},
+			#{item.password,jdbcType=VARCHAR}, #{item.salt,jdbcType=VARCHAR}, #{item.ticket,jdbcType=VARCHAR}, 
+			#{item.roleId,jdbcType=INTEGER},
+			#{item.status,jdbcType=BIT}, #{item.onlineStatus,jdbcType=BIT},
+			#{item.mobile,jdbcType=VARCHAR},#{item.createTime,jdbcType=TIMESTAMP},
+			#{item.sex,jdbcType=VARCHAR},#{item.userSign,jdbcType=VARCHAR},#{item.profilePicture},
+			#{item.userType},#{item.province},#{item.city},#{item.country},
+			#{item.age},#{item.likeNum},#{item.loginIp},#{item.loginType},#{item.loginAgain},#{item.email})
+		</foreach>
+	</insert>
+	
+	<update id="loginOut" parameterType="com.fangg.bean.chat.vo.SysUserVO">
+		update sys_user set online_status=#{onlineStatus} where user_code=#{userCode} and ticket=#{ticket}
+	</update>
+	
+	<!-- 省份 -->
+	<select id="provinceList" resultType="com.fangg.bean.chat.to.ProvinceTO">
+		select pid,province from province		
+	</select>
+	
+	<!-- 城市 -->
+	<select id="cityList" resultType="com.fangg.bean.chat.to.CityTO">
+		select cid,city,pid from city
+	</select>
+	
+	<!-- 分页查询用户列表 -->
+	<select id="selectUserListByPage" parameterType="com.fangg.bean.chat.vo.SysUserVO" resultType="com.fangg.bean.chat.to.UserConfigTO" >
+		SELECT 
+			su.user_id,
+			su.user_code, 
+			su.username,
+			su.online_status, 
+			su.sex, 
+			su.age, 
+			su.user_sign, 
+			su.profile_picture, 
+			IFNULL(su.like_num, 0) AS likeNum,
+			su.user_type,
+			IFNULL(uc.stranger_contact, 0) AS strangerContact
+		FROM sys_user su 
+		LEFT JOIN user_config uc ON uc.user_code=su.user_code 
+		<where>
+			su.user_code <![CDATA[ <> ]]> 'SYSTEM' AND su.user_type=1 AND su.delete_flag=0 AND su.status=0 
+			<if test="content != null and content != ''">
+				AND (su.username LIKE concat(#{content}, '%') OR su.user_code=#{content})
+			</if>
+			<if test="city != null and city != ''">
+				AND su.city=#{city}
+			</if>
+			<if test="province != null and province != ''">
+				AND su.province=#{province}
+			</if>
+			<if test="sex != null">
+				AND su.sex=#{sex}
+			</if>
+			<if test="startAge != null and endAge != null">
+				AND su.age BETWEEN #{startAge} AND #{endAge}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询用户列表 -->
+	<select id="selectUserListByIn" parameterType="java.util.List" resultType="com.fangg.bean.chat.to.UserConfigTO" >
+		SELECT 
+			su.user_id,
+			su.user_code, 
+			su.username,
+			su.online_status, 
+			su.sex, 
+			su.age, 
+			su.user_sign, 
+			su.profile_picture, 
+			IFNULL(su.like_num, 0) AS likeNum,
+			su.user_type,
+			su.update_time,
+			IFNULL(uc.stranger_contact, 0) AS strangerContact,
+			IFNULL(uc.show_ball, 0) AS showBall,
+			IFNULL(uc.ball_show_seconds, 0) AS ballShowSeconds
+		FROM sys_user su 
+		LEFT JOIN user_config uc ON uc.user_code=su.user_code 
+		WHERE su.user_code IN
+		<foreach collection="list" item="userCode" index="index" open="(" close=")" separator=",">
+		  #{userCode}
+		</foreach>
+		ORDER BY su.update_time DESC
+	</select>
+	
+	<!-- 用户离线更新 -->
+	<update id="updateUserOnlineDown" parameterType="java.util.List" >
+		update sys_user set online_status=0 
+		WHERE user_code IN
+		<foreach collection="list" item="userCode" index="index" open="(" close=")" separator=",">
+		  #{userCode}
+		</foreach>
+	</update>
+	
+</mapper>

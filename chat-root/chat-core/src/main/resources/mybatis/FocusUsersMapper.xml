@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.FocusUsersMapper">
+
+	<resultMap id="FocusUsersMap" type="com.fangg.bean.chat.query.FocusUsers">
+		<id column="focus_id" jdbcType="BIGINT" property="focusId" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="focus_user_code" jdbcType="VARCHAR" property="focusUserCode" />
+		<result column="focus_user_name" jdbcType="VARCHAR" property="focusUserName" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	
+	<insert id="insertFocusUser" parameterType="com.fangg.bean.chat.vo.FocusUsersVO">
+		insert into focus_users (user_id, focus_user_code,
+		focus_user_name, create_time)
+		value 
+		(#{userId,jdbcType=INTEGER},
+		#{focusUserCode,jdbcType=VARCHAR},
+		#{focusUserName,jdbcType=VARCHAR},
+		#{createTime})
+	</insert>
+	
+	<insert id="insertFocusUsersByBatch" parameterType="java.util.List">
+		insert into focus_users (user_id, focus_user_code,
+		focus_user_name, create_time)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.userId,jdbcType=INTEGER},
+			#{item.focusUserCode,jdbcType=VARCHAR},
+			#{item.focusUserName,jdbcType=VARCHAR},
+			#{item.createTime})
+		</foreach>
+	</insert>
+	
+	<!-- 分页查询关注用户列表 -->
+	<select id="selectFocusUserListByPage" parameterType="com.fangg.bean.chat.vo.FocusUsersVO" resultType="com.fangg.bean.chat.to.UserConfigTO">
+		SELECT 
+			su.user_id,
+			su.user_code,
+			su.username,
+			su.online_status,
+			IFNULL(su.profile_picture, '') AS profilePicture,
+			IFNULL(su.user_sign, '') AS userSign,
+			IFNULL(su.like_num, 0) AS likeNum,
+			su.user_type
+			<if test="configFlag != null and configFlag == 1">
+				,IFNULL(uc.stranger_contact,0) AS strangerContact
+			</if>
+		FROM focus_users fu 
+		LEFT JOIN sys_user su ON su.user_code=fu.focus_user_code 
+		<if test="configFlag != null and configFlag == 1">
+			LEFT JOIN user_config uc ON uc.user_code=su.user_code 
+		</if>
+		WHERE fu.user_id=#{userId}
+	</select>
+	
+	<!-- 用户关注数量 -->
+	<select id="selectUserFocusNum" parameterType="com.fangg.bean.chat.vo.FocusUsersVO" resultType="java.lang.Integer">
+		SELECT count(*) as num FROM focus_users fu WHERE fu.focus_user_code=#{focusUserCode}
+	</select>
+	
+	<!-- 取消关注用户 -->
+	<update id="cancelFocusUser" parameterType="com.fangg.bean.chat.vo.FocusUsersVO">
+		DELETE FROM focus_users WHERE focus_user_code=#{focusUserCode} AND user_id=#{userId}
+	</update>
+	
+	<!-- 查询关注用户列表 -->
+	<select id="selectUserFocusAll" parameterType="com.fangg.bean.chat.vo.FocusUsersVO" resultType="com.fangg.bean.chat.query.FocusUsers">
+		SELECT * FROM focus_users fu 
+		<where>
+			fu.user_id = #{userId}
+			<if test="focusUserCode != null and focusUserCode != ''">
+				AND fu.focus_user_code=#{focusUserCode}
+			</if>
+		</where>
+	</select>
+	
+</mapper>

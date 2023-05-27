@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.BlackInfoMapper">
+
+	<resultMap id="BlackInfoMap" type="com.fangg.bean.chat.query.BlackInfo">
+		<id column="black_id" jdbcType="INTEGER" property="blackId" />
+		<result column="black_code" jdbcType="VARCHAR" property="blackCode" />
+		<result column="user_code" jdbcType="VARCHAR" property="userCode" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="descript" jdbcType="VARCHAR" property="descript" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="login_type" jdbcType="INTEGER" property="loginType" />
+		<result column="ip_addr" jdbcType="VARCHAR" property="ipAddr" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+
+	<insert id="insertBlackInfoByBatch" parameterType="java.util.List">
+		insert into black_info (black_code, user_code,
+		username, descript, status, ip_addr, create_time, 
+		login_type)
+		values
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{item.blackCode,jdbcType=VARCHAR},
+			#{item.userCode,jdbcType=VARCHAR}, #{item.username,jdbcType=VARCHAR},
+			#{item.descript,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT},
+			#{item.ipAddr,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, 
+			#{loginType})
+		</foreach>
+	</insert>
+
+
+</mapper>

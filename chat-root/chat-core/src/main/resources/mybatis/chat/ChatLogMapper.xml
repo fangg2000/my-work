@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.ChatLogMapper">
+
+	<resultMap id="ChatLogMap" type="com.fangg.bean.chat.query.ChatLog">
+		<id column="chat_id" jdbcType="VARCHAR" property="chatId" />
+		<result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+		<result column="server" jdbcType="VARCHAR" property="server" />
+		<result column="client" jdbcType="VARCHAR" property="client" />
+		<result column="receiver" jdbcType="VARCHAR" property="receiver" />
+		<result column="type" jdbcType="CHAR" property="type" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="status" jdbcType="CHAR" property="status" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="init_time" jdbcType="BIGINT" property="initTime" />
+	</resultMap>
+	
+	<insert id="insertChatLog" parameterType="com.fangg.bean.chat.vo.ChatLogVO">
+		insert into chat_log (chat_id, company_code, server,
+		client, receiver, type, content,
+		status, create_time, init_time)
+		value (#{chatId,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, #{server,jdbcType=VARCHAR},
+			#{client,jdbcType=VARCHAR},#{receiver,jdbcType=VARCHAR}, #{type,jdbcType=CHAR},
+			#{content,jdbcType=VARCHAR},
+			#{status,jdbcType=CHAR}, #{createTime}, #{initTime})
+	</insert>
+	
+	<insert id="insertChatLogByBatch" parameterType="java.util.List">
+		insert into chat_log (chat_id, company_code, server,
+		client, receiver, type, content,
+		status, create_time, init_time)
+		values
+		<foreach collection="list" index="index" item="item"
+			separator=",">
+			(#{chatId,jdbcType=VARCHAR}, #{item.companyCode,jdbcType=VARCHAR}, #{item.server,jdbcType=VARCHAR},
+			#{item.client,jdbcType=VARCHAR}, #{item.receiver,jdbcType=VARCHAR}, #{item.type,jdbcType=CHAR},
+			#{item.content,jdbcType=VARCHAR},
+			#{item.status,jdbcType=CHAR}, #{item.createTime}, #{item.initTime})
+		</foreach>
+	</insert>
+	
+	<!-- 查看更多记录 -->
+	<select id="listChatMore" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultMap="ChatLogMap">
+		SELECT t1.chat_id,
+			t1.company_code, 
+			t1.server,
+			t1.client, 
+			t1.type, 
+			t1.content,
+			t1.status, 
+			t1.init_time 
+		FROM chat_log t1 
+		WHERE 
+		<choose>
+			<when test="receiver != null and receiver != ''">
+				t1.receiver=#{receiver} 
+				AND (t1.`server`=#{client} OR t1.client=#{client}) 
+			</when>
+			<when test="companyCode != null and companyCode != '' and companyCode == server">
+				t1.server=#{server} 
+			</when>
+			<otherwise>
+				t1.`server`=#{server} AND t1.client=#{client}
+			</otherwise>
+		</choose>
+		<if test="status != null and status != ''">
+			AND t1.`status`=#{status}
+		</if>
+		<if test="initTime != null">
+			AND t1.init_time<![CDATA[<]]>#{initTime}
+		</if>
+		ORDER BY t1.chat_id DESC 
+		<choose>
+			<when test="pageSize != null">
+				LIMIT #{pageSize}
+			</when>
+			<otherwise>LIMIT 5</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 更新记录为“已读” -->
+	<update id="updateReadStatus" parameterType="com.fangg.bean.chat.vo.ChatLogVO" >
+		UPDATE chat_log SET status='1' WHERE company_code=#{companyCode} AND server=#{server} AND client=#{client} AND type=#{type} AND status='0'
+	</update>
+    
+	<select id="checkTableExistsWithSchema" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM information_schema.tables WHERE table_name = #{tableName} 
+    </select>
+
+    <select id="checkTableExistsWithShow" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="java.util.Map">
+        show tables like #{tableName} 
+    </select>
+	
+	<!-- 创建企业对应数据表 -->
+	<update id="createNewTable" parameterType="com.fangg.bean.chat.vo.ChatLogVO" >
+		DROP table IF EXISTS chat_log;
+		CREATE TABLE chat_log (
+		  `chat_id` varchar(30) NOT NULL,
+		  `company_code` varchar(16) NOT NULL,
+		  `server` varchar(16) NOT NULL,
+		  `client` varchar(16) NOT NULL,
+		  `type` char(1) NOT NULL DEFAULT '0' COMMENT '类型，0：客服，1：用户',
+		  `content` varchar(255) DEFAULT NULL,
+		  `status` char(1) NOT NULL DEFAULT '1' COMMENT '0：未读，1：已读',
+		  `create_time` datetime DEFAULT NULL,
+		  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+		  PRIMARY KEY (`chat_id`),
+		  KEY `idx_server` (`server`) USING BTREE,
+		  KEY `idx_client` (`client`) USING BTREE
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	</update>
+	
+	
+	<!-- 查询当前企业下未读的用户 -->
+	<select id="selectUserListByChatNotRead" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT u.user_id,
+		u.user_code,
+		u.username,
+		u.profile_picture,
+		u.user_sign,
+		u.user_type,
+		COUNT(*) AS num,
+		t1.content 
+		FROM sys_user u 
+			RIGHT JOIN (SELECT c.client,c.content FROM chat_log c 
+				WHERE c.company_code=#{companyCode} AND c.type=#{type} AND c.`status`='0' 
+				<if test="server != null and server != ''"> ORDER BY FIELD(c.server, #{server}) DESC</if>
+				) t1 ON t1.client=u.user_code GROUP BY u.user_code 
+    </select>
+	
+	<!-- 查询用户未读的客服信息列表 -->
+	<select id="selectCustomerListByChatNotRead" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT u.user_id,
+		u.user_code,
+		u.username,
+		u.profile_picture,
+		u.user_sign,
+		u.user_type as userType,
+		COUNT(*) AS num,
+		t.content,
+		t.company_code 
+		FROM (SELECT c.company_code,c.`server`,c.client,c.content
+			FROM chat_log c WHERE c.client=#{client} AND c.type='0' AND c.`status`='0' ) t
+		LEFT JOIN sys_user u ON u.user_code=t.`server`
+		GROUP BY t.`server`
+    </select>
+	
+	<!-- 查询未读的新用户列表 -->
+	<select id="selectNewUserListByChatNotRead" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT 
+			su.user_id,
+			su.user_code,
+			su.username,
+			su.profile_picture,
+			su.user_sign,
+			su.user_type,
+			c.content, 
+			COUNT(*) AS num
+		FROM chat_log c 
+		LEFT JOIN sys_user su ON su.user_code=c.`server`
+		WHERE c.`status`='0' AND c.client=#{client} GROUP BY c.`server`
+    </select>
+	
+	<!-- 查询未读的老用户列表 -->
+	<select id="selectOldUserListByChatNotRead" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT 
+			su.user_id,
+			su.user_code,
+			su.username,
+			su.profile_picture,
+			su.user_sign,
+			su.user_type,
+			c.content, 
+			COUNT(*) AS num
+		FROM chat_log c 
+		LEFT JOIN sys_user su ON su.user_code=c.client
+		WHERE c.`status`='0' AND c.`server`=#{server} GROUP BY c.client 
+    </select>
+    
+    <!-- 查询用户未读的关注用户列表(此查询可能会出问题) -->
+	<select id="selectFocusUserListByChatNotRead" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT t1.user_id,
+		t1.user_code,
+		t1.username,
+		t1.profile_picture,
+		t1.user_sign,
+		t1.user_type as userType,
+		c.content, 
+		COUNT(*) AS num
+		FROM (SELECT su.user_id,su.user_code,su.username,su.profile_picture,su.user_sign,su.user_type
+			FROM focus_users fu 
+			LEFT JOIN sys_user su ON su.user_code=fu.focus_user_code
+			WHERE fu.user_id=#{userId}) t1 
+		LEFT JOIN chat_log c ON c.client=t1.user_code 
+		WHERE c.`status`='0' 
+			AND (c.`server`=#{client} AND c.client=t1.user_code ) 
+			OR (c.`server`=t1.user_code AND c.client=#{client} )
+		GROUP BY t1.user_code
+	</select>
+    
+    <!-- 查询用户未读的聊天记录列表 -->
+	<select id="selectChatLogListByChatNotRead" parameterType="com.fangg.bean.chat.vo.ChatLogVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT
+			c.chat_id AS chatId,
+			CASE c.`server` WHEN #{client} THEN c.client ELSE c.`server` END AS userCode,
+			c.content,
+			c.init_time AS initTime,
+			COUNT(*) AS num
+		FROM chat_log c 
+		WHERE c.`status` = '0' AND c.receiver=#{client}
+		GROUP BY userCode
+	</select>
+	
+	<select id="selectChatLogByBA" parameterType="java.lang.String" resultType="com.fangg.bean.chat.query.ChatLog" >
+		<!-- select * from chat_log where chat_id between #{startId} and #{endId}  -->
+		select * from chat_log where chat_id &gt; #{startId} and chat_id &lt; #{endId} limit 5
+		<!-- select * from chat_log where chat_id=#{startId} -->
+	</select>
+	
+</mapper>

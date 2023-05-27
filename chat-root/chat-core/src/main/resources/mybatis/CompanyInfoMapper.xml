@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.CompanyInfoMapper">
+
+	<resultMap id="CompanyInfoMap" type="com.fangg.bean.chat.query.CompanyInfo">
+		<id column="company_id" jdbcType="INTEGER" property="companyId" />
+		<result column="company_name" jdbcType="VARCHAR" property="companyName" />
+		<result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="split_rows" jdbcType="BIGINT" property="splitRows" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+	</resultMap>
+	
+	<insert id="insertCompanyInfoByBatch" parameterType="java.util.List">
+		insert into company_info (company_name, company_code,
+		user_id, status, split_rows,
+		create_time, delete_flag, table_time_split
+		)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.companyName,jdbcType=VARCHAR},
+			#{item.companyCode,jdbcType=VARCHAR},
+			#{item.userId,jdbcType=INTEGER}, #{item.status,jdbcType=INTEGER},
+			#{item.splitRows,jdbcType=BIGINT},
+			#{item.createTime,jdbcType=TIMESTAMP},
+			#{item.deleteFlag,jdbcType=VARCHAR},
+			#{item.tableTimeSplit,jdbcType=LONGVARCHAR}
+			)
+		</foreach>
+	</insert>
+	
+	<!-- 用户对应所属信息 -->
+	<select id="selectUserCompanyInfoForList" parameterType="com.fangg.bean.chat.vo.CompanyInfoVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT 
+		u.user_id AS userId,
+		u.username AS username,
+		u.user_code AS userCode,
+		c.company_name AS companyName,
+		c.company_code AS companyCode,
+		c.split_rows AS splitRows,
+		c.table_time_split AS tableTimeSplit
+		FROM sys_user u RIGHT JOIN company_info c ON c.user_id=u.user_id
+		WHERE c.user_id=#{userId}
+	</select>
+	
+	<!-- 新增客服企业外键表信息 -->
+	<insert id="insertUserCompanyInfo" parameterType="com.fangg.bean.chat.vo.UserCompanyVO">
+		insert into user_company_fk(user_id, company_id, company_code) 
+		value (#{userId}, #{companyId}, #{companyCode})
+	</insert>
+	
+	<!-- 客服对应所属信息 -->
+	<select id="selectUserCompanyInfo" parameterType="com.fangg.bean.chat.vo.UserCompanyVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT 
+		u.user_id AS userId,
+		u.username AS username,
+		u.user_code AS userCode,
+		c.company_name AS companyName,
+		c.company_code AS companyCode
+		FROM sys_user u 
+		INNER JOIN user_company_fk f ON f.user_id=u.user_id
+		LEFT JOIN company_info c ON c.company_id=f.company_id
+		WHERE u.user_code=#{userCode}
+	</select>
+	
+	<!-- 客服信息列表(与企业关联的) -->
+	<select id="selectCustomerServiceList" parameterType="com.fangg.bean.chat.vo.UserCompanyVO" resultType="com.fangg.bean.chat.to.UserCompanyTO">
+		SELECT 
+			su.user_id,
+			su.user_code, 
+			su.username,
+			su.online_status, 
+			su.user_sign, 
+			su.profile_picture, 
+			su.user_type,
+			su.update_time,
+			IFNULL(uc.stranger_contact, 0) AS strangerContact,
+			IFNULL(uc.show_ball, 0) AS showBall,
+			IFNULL(uc.ball_show_seconds, 0) AS ballShowSeconds,
+			uf.company_code 
+		FROM sys_user su 
+			LEFT JOIN user_config uc ON uc.user_code=su.user_code 
+			RIGHT JOIN user_company_fk uf ON uf.user_id=su.user_id
+		WHERE su.user_type=0 AND su.delete_flag=0 AND su.status=0 
+		<if test="userCode != null and userCode != ''">
+			AND su.user_code=#{userCode} OR uf.company_code=#{userCode}
+		</if>
+		ORDER BY su.online_status DESC
+	</select>
+	
+</mapper>

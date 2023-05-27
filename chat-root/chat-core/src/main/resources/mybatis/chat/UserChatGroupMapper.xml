@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.UserChatGroupMapper">
+
+	<resultMap id="UserChatGroupMap" type="com.fangg.bean.chat.query.UserChatGroup">
+		<id column="ucg_id" jdbcType="INTEGER" property="ucgId" />
+		<result column="user_code" jdbcType="VARCHAR" property="userCode" />
+		<result column="chat_group_code" jdbcType="VARCHAR" property="chatGroupCode" />
+		<result column="chat_group_name" jdbcType="VARCHAR" property="chatGroupName" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="msg_status" jdbcType="INTEGER" property="msgStatus" />
+		<result column="identity" jdbcType="INTEGER" property="identity" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+
+	<insert id="insertUCGByBatch" parameterType="java.util.List">
+		insert into user_cg_fk (user_code, chat_group_code,
+		chat_group_name, msg_status, create_time, username, 
+		identity
+		)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.userCode,jdbcType=VARCHAR},
+			#{item.chatGroupCode,jdbcType=VARCHAR},
+			#{item.chatGroupName,jdbcType=VARCHAR},
+			#{item.msgStatus,jdbcType=TINYINT},
+			#{item.createTime,jdbcType=TIMESTAMP}, #{username}, #{identity}
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteUCG" parameterType="com.fangg.bean.chat.vo.UserChatGroupVO">
+		delete from user_cg_fk where user_code=#{userCode} and chat_group_code=#{chatGroupCode}
+	</delete>
+	
+	<update id="updateCGMsgStatus" parameterType="com.fangg.bean.chat.vo.UserChatGroupVO">
+		update user_cg_fk set msg_status=#{msgStatus} where user_code=#{userCode} and chat_group_code=#{chatGroupCode}
+	</update>
+
+</mapper>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangg.dao.record.DailyRecordMapper">
+
+	<resultMap id="DailyRecordMap" type="com.fangg.bean.chat.query.record.DailyRecord">
+		<id column="record_id" jdbcType="BIGINT" property="recordId" />
+		<result column="user_code" jdbcType="VARCHAR" property="userCode" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="record_status" jdbcType="INTEGER" property="recordStatus" />
+		<result column="record_group_id" jdbcType="INTEGER" property="recordGroupId" />
+		<result column="review_num" jdbcType="INTEGER" property="reviewNum" />
+		<result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+		<result column="discuss_num" jdbcType="INTEGER" property="discussNum" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
+	</resultMap>
+	
+	<insert id="insertDailyRecord" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO">
+		insert into daily_record (record_id, user_code, title,
+		record_status, record_group_id, create_time, update_time,
+		content, review_num, collect_num, discuss_num)
+		values (#{recordId}, #{userCode,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{recordStatus}, #{recordGroupId,jdbcType=INTEGER}, #{createTime}, now(), 
+		#{content}, #{reviewNum}, #{collectNum}, #{discussNum})
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO">
+		update daily_record
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="recordStatus != null">
+				record_status = #{recordStatus,jdbcType=BIT},
+			</if>
+			<if test="recordGroupId != null">
+				record_group_id = #{recordGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="content != null and content != ''">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="reviewNum != null">
+				review_num = #{reviewNum},
+			</if>
+			<if test="collectNum != null">
+				collect_num = #{collectNum},
+			</if>
+			<if test="discussNum != null">
+				discuss_num = #{discussNum},
+			</if>
+			<if test="deleteFlag != null">
+				delete_flag = #{deleteFlag},
+			</if>
+		</set>
+		where record_id = #{recordId,jdbcType=BIGINT}
+	</update>
+	
+	<select id="selectDailyRecordList" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO" resultType="com.fangg.bean.chat.query.record.DailyRecord">
+		SELECT * FROM daily_record 
+		<where>
+			user_code=#{userCode} AND delete_flag = 0
+			<if test="title != null and title != ''">
+				AND title=#{title}
+			</if>
+			<if test="createTime != null">
+				AND create_time=#{createTime}
+			</if>
+			<if test="recordGroupId != null">
+				AND record_group_id=#{recordGroupId}
+			</if>
+		</where>
+		ORDER BY update_time DESC
+	</select>
+	
+	<select id="selectDRListByIn" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO" resultType="com.fangg.bean.chat.query.record.DailyRecord">
+		SELECT * FROM daily_record 
+		WHERE delete_flag = 0 AND record_id IN
+		<foreach collection="list" item="recordGroupId" index="index" open="(" close=")" separator=",">
+		  #{recordId}
+		</foreach>
+		ORDER BY update_time ASC
+	</select>
+	
+	<select id="selectDRByPrimaryKey" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO" resultType="com.fangg.bean.chat.query.record.DailyRecord">
+		SELECT 
+			record_id, 
+			title,
+			content, 
+			record_status,
+			record_group_id,
+			create_time, 
+			review_num, 
+			collect_num, 
+			discuss_num
+		FROM daily_record 
+		WHERE record_id=#{recordId}
+	</select>
+	
+	<!-- 分页查询日记列表 -->
+	<select id="selectDailyRecordListByPage" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO" resultType="com.fangg.bean.chat.query.record.DailyRecord">
+		SELECT * FROM daily_record 
+		<where>
+			user_code=#{userCode} AND delete_flag = 0 
+			<if test="recordGroupId != null">
+				AND record_group_id &lt; #{recordGroupId}
+			</if>
+			<!-- <if test="updateTime != null">
+				AND record_group_id<![CDATA[<]]>#{updateTime}
+			</if> -->
+		</where>
+		ORDER BY update_time DESC 
+		<choose>
+			<when test="pageSize != null">
+				LIMIT #{pageSize}
+			</when>
+			<otherwise>LIMIT 10</otherwise>
+		</choose>
+	</select>
+	
+	<delete id="deleteDailyRecord" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO">
+		DELETE FROM daily_record WHERE record_id = #{recordId}
+	</delete>
+	
+	<update id="updateDRNum" parameterType="com.fangg.bean.chat.vo.record.DailyRecordVO">
+		update daily_record 
+		<set>
+			<if test="reviewNum != null">
+				review_num = review_num + #{reviewNum},
+			</if>
+			<if test="collectNum != null">
+				collect_num = collect_num + #{collectNum},
+			</if>
+		</set>
+		WHERE record_id = #{recordId}
+		<if test="reviewNum != null and reviewNum == -1">
+			AND review_num > 0
+		</if>
+		<if test="collectNum != null and collectNum == -1">
+			AND collect_num > 0
+		</if>
+	</update>
+		
+</mapper>

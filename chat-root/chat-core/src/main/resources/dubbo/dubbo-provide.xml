@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd"> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans        
+        http://www.springframework.org/schema/beans/spring-beans.xsd        
+        http://code.alibabatech.com/schema/dubbo        
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="${dubbo.application}"  />
+    <!-- <dubbo:registry address="multicast://224.5.6.7:1234?unicast=false" /> -->
+    <!--support zk-->
+    <dubbo:registry address="${dubbo.address}" />
+    <!--support nacos-->
+    <!-- <dubbo:registry address="nacos://127.0.0.1:8848"/> -->
+    <dubbo:protocol name="${dubbo.name}" port="${dubbo.port}" />
+
+	<dubbo:service interface="com.fangg.service.ChatLogService" ref="chatLogService" timeout="5000" async="false" retries="0"/>
+	<dubbo:service interface="com.fangg.service.SysUserService" ref="sysUserService" timeout="5000" async="false" retries="0"/>
+	<dubbo:service interface="com.fangg.service.CompanyInfoService" ref="companyInfoService" timeout="5000" async="false" retries="0"/>
+	<dubbo:service interface="com.fangg.service.FocusUsersService" ref="focusUsersService" timeout="5000" async="false" retries="0"/>
+	<dubbo:service interface="com.fangg.service.UserConfigService" ref="userConfigService" timeout="5000" async="false" retries="0"/>
+	<dubbo:service interface="com.fangg.service.ChatGroupService" ref="chatGroupService" timeout="5000" async="false" retries="0"/>
+	
+	<!-- 日记相关服务 -->
+	<dubbo:service interface="com.fangg.service.record.DailyRecordService" ref="dailyRecordService" timeout="5000" async="false" retries="0"/>
+	<dubbo:service interface="com.fangg.service.record.RecordGroupService" ref="recordGroupService" timeout="5000" async="false" retries="0"/>
+	<dubbo:service interface="com.fangg.service.record.DiscussInfoService" ref="discussInfoService" timeout="5000" async="false" retries="0"/>
+	
+	
+	<dubbo:service interface="com.fangg.service.BlackInfoService" ref="blackInfoService" timeout="5000" async="false" retries="0"/>
+
+</beans>
