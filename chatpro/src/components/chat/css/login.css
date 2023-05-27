@@ -1,0 +1,384 @@
+@import url("https://fonts.googleapis.com/css?family=Varela+Round");
+/* body {
+  margin: 0;
+  padding: 0;
+  font-family: "Varela Round", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #3eacf8;
+  background: -webkit-linear-gradient(to right, #b6fbff, #3eacf8);
+  background: linear-gradient(to right, #b6fbff, #3eacf8);
+  overflow-x: hidden;
+}
+ */
+
+.container {
+  position: relative;
+  top: 180px;
+}
+
+.circle {
+  position: relative;
+  width: 30em;
+  height: 30em;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
+  border: 3px solid #3EACF8;
+  margin: 5em auto 0;
+  z-index: 1;
+  background: white;
+}
+.circle > * {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7em;
+  height: 7em;
+  margin: -56px;
+}
+.circle > *:nth-of-type(1) {
+  transform: rotate(0deg) translate(15em) rotate(0deg);
+}
+.circle > *:nth-of-type(2) {
+  transform: rotate(60deg) translate(15em) rotate(-60deg);
+}
+.circle > *:nth-of-type(3) {
+  transform: rotate(120deg) translate(15em) rotate(-120deg);
+}
+.circle > *:nth-of-type(4) {
+  transform: rotate(180deg) translate(15em) rotate(-180deg);
+}
+.circle > *:nth-of-type(5) {
+  transform: rotate(240deg) translate(15em) rotate(-240deg);
+}
+.circle > *:nth-of-type(6) {
+  transform: rotate(300deg) translate(15em) rotate(-300deg);
+}
+
+input[type=radio] {
+  position: absolute;
+  left: 290px;
+  display: none;
+}
+
+.el-form-item__content {
+  padding: 0px 0px;
+}
+
+label {
+  border: 3px solid #3eacf8;
+  border-radius: 100%;
+  position: relative;
+  background: #fff;
+  z-index: 5;
+  cursor: pointer;
+  transition: 0.5s;
+}
+label:hover {
+  background: #fff;
+  border-color: #3EACF8;
+}
+label:hover > span {
+  color: black;
+}
+label:active {
+  height: 6em;
+  width: 6em;
+}
+
+
+.cu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  color: #3EACF8;
+  opacity: 0;
+  animation: start 0.5s ease forwards;
+}
+@keyframes start {
+  0% {
+    transform: translateY(1px);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.circle [id^=tab]:checked + .nav-label {
+  background: #3eacf8;
+  animation: grow 0.2s linear forwards;
+  overflow: hidden;
+  box-shadow: 0 1px 1px #3eacf8,inset 0 5px 10px 5px rgba(255,255,255,1);
+}
+@keyframes grow {
+  100% {
+    height: 8.2em;
+    width: 8.2em;
+  }
+}
+
+.circle [id^=tab]:checked + .nav-label > .wave {
+  display: block;
+}
+
+.circle [id^=tab]:checked + .nav-label > .wave > .wave2 {
+  opacity: 1;
+}
+
+.circle [id^=tab]:checked + .nav-label > span {
+  color: black;
+}
+
+.circle [id^=tab]:checked + .nav-label > .rain-drop {
+  display: none;
+}
+
+/* .wave {
+  position: absolute;
+  z-index: -1;
+  height: 200px;
+  width: 200px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 30%;
+  top: -115px;
+  right: -25px;
+  animation: wave 5s linear infinite;
+  display: none;
+}
+@keyframes wave {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.wave2 {
+  position: absolute;
+  z-index: 2;
+  height: 185px;
+  width: 185px;
+  background: white;
+  border-radius: 30%;
+  opacity: 0;
+  border-radius: 100%;
+} */
+
+#tab-content1 {
+  position: absolute;
+  height: 512px;
+  width: 512px;
+  transform: translateX(-200px) translateY(-200px);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+}
+
+.container-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 100px;
+  left: 135px;
+}
+
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  top: -50px;
+}
+
+.pic {
+  height: 85px;
+  width: 85px;
+  border-radius: 100%;
+  margin-bottom: 8px;
+  border: 3px solid #3EACF8;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.name {
+  font-size: 18px;
+}
+
+.account {
+  color: #ccc;
+  font-size: 13px;
+}
+
+.formfield {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -50px;
+  left: 0px;
+}
+
+.one, .two, .three {
+  position: relative;
+  width: 250px;
+  left: 0px;
+}
+
+#texter {
+  position: relative;
+  top: 8px;
+  left: 0px;
+  width: 100%;
+  height: 25px;
+  margin-top: 0px;
+  border: none;
+  background: transparent;
+  padding-bottom: 0px;
+  font-size: 14px;
+  z-index: 100;
+}
+#texter:focus {
+  outline: none;
+}
+
+#texter::-webkit-input-placeholder {
+  padding-left: 1px;
+  font-size: 12px;
+  padding-bottom: 0px;
+}
+
+#texter:focus::-webkit-input-placeholder {
+  opacity: 0;
+}
+
+.underline {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 250px;
+  height: 2px;
+  background: #555;
+  z-index: 110;
+  transition: 1.6s;
+}
+.underline:after {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 2px;
+  background: #3eacf8;
+  opacity: 0;
+}
+
+.one {
+  margin-top: 10px;
+}
+
+.submit {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  margin: 0px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -50px;
+  z-index: 200;
+}
+
+
+.text {
+  position: absolute;
+  right: 0px;
+  color: white;
+  bottom: 0px;
+  font-size: 14px;
+  border-radius: 0;
+  background: #3eacf8;
+  border: none;
+  z-index: -10;
+  transition: 0.5s;
+  height: 25px;
+  padding: 0px 5px;
+  opacity: 1;
+  transition: 0.5s;
+  transition-delay: 0.1s;
+  opacity: 0;
+}
+.text span {
+  position: relative;
+  top: -8px;
+}
+
+
+#texter:focus ~ .text {
+  opacity: 1 !important;
+  transform: translateY(-4px);
+}
+
+#texter:focus ~ .underline:after {
+  opacity: 1;
+  animation: growing 0.2s linear forwards;
+}
+@keyframes growing {
+  100% {
+    width: 250px;
+  }
+}
+
+.tab-content {
+  opacity: 0;
+  display: none;
+}
+
+#tab4:checked ~ #tab-content1,
+#tab2:checked ~ #tab-content2,
+#tab3:checked ~ #tab-content3, 
+#tab1:checked ~ #tab-content1 {
+  opacity: 1;
+}
+
+#tab2:checked ~ #tab-content2,
+#tab3:checked ~ #tab-content3, 
+#tab1:checked ~ #tab-content1 {
+  display: block;
+}
+
+h1.center {
+  display: none;
+  z-index: -100;
+}
+
+#tab-content3 > h1.center {
+  position: absolute;
+  top: -200px;
+  left: 110px;
+  display: block;
+}
+
+#tab-content2 > h1.center {
+  position: absolute;
+  top: -200px;
+  right: 90px;
+  display: block;
+}
+
+#tab-content4 > h1.center {
+  position: absolute;
+  top: 0px;
+  left: 230px;
+  display: block;
+}

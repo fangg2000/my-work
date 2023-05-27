@@ -1,0 +1,409 @@
+.user-info {
+  width: 350px;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  overflow-y: auto;
+  border-right: 1px solid #DCDFE6;
+}
+.info-title {
+  width: 350px;
+  text-align: center;
+  margin: 0px auto;
+  padding: 30px 0px;
+  font-size: 35px;
+  font-weight: bolder;
+  border-bottom: 1px solid #DCDFE6;
+  position: fixed;
+}
+.info-user {
+  position: relative;
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin-top: 150px;
+}
+/* .info-user img {
+  width: 100px;
+  height: 100px;
+  margin: 25px auto;
+  border-radius: 50% 50% 50% 50%;
+} */
+.info-username {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.info-sign {
+  margin: 0px 10px;
+  opacity: 0.5;
+}
+.info-config {
+  width: 100%;
+  margin: 30px 0px;
+}
+.el-row button {
+  margin: 0px 5px;
+}
+.info-danger {
+  position: relative;
+  left: -25px;
+  top: -45px;
+  color: #dbdb39;
+}
+
+
+/* 搜索栏 */
+.search-info {
+  width: 1300px;
+  height: 100%;
+  position: absolute;
+  left: 350px;
+}
+.search-header {
+  top: 0px;
+  width: 100%;
+  height: 111px;
+  text-align: right;
+  padding: 0px 0px;
+  border-bottom: 1px solid #DCDFE6;
+}
+.search-text {
+  width: 480px;
+  height: 35px;
+  border: 1px solid #EBEEF5;
+  border-radius: 15px 15px 15px 15px;
+  margin: 35px 0px;
+  position: absolute;
+  right: 35px;
+  text-align: left;
+}
+.search-text input {
+  width: 400px;
+  height: 28px;
+  border: 0px solid transparent;
+  margin: 4px 10px;
+  padding: 0px 0px;
+  font-size: 18px;
+}
+.search-text input::-webkit-input-placeholder {
+  color: rgb(202, 202, 202);
+}
+.search-text input:-moz-placeholder {
+  color: rgb(202, 202, 202);
+}
+.search-text input::-moz-placeholder {
+  color: rgb(202, 202, 202);
+}
+.search-text input:-ms-input-placeholder {
+  color: rgb(202, 202, 202);
+}
+.btn-search {
+  position: absolute;
+  right: 0px;
+  top: 2px;
+}
+.btn-clear {
+  position: absolute;
+  right: -30px;
+  top: 2px;
+}
+.btn-clear:hover {
+  border:1px solid rgb(198, 232, 255);
+  border-radius: 50% 50% 50% 50%;
+  top: 3px;
+}
+/* .btn-conditions {
+  
+} */
+input:focus {
+  outline: none;
+  border-color: transparent;
+  background-color: transparent;
+}
+.more-conditions {
+  position: absolute;
+  right: 30px;
+  top: 2px;
+}
+.more-conditions:hover {
+  border:1px solid rgb(198, 232, 255);
+  border-radius: 50% 50% 50% 50%;
+}
+/* .el-dropdown-menu {
+  display: none;
+} */
+.add-condition {
+  position: relative;
+  float: left;
+  top: 0px;
+  display: none;
+}
+
+
+/* 查询用户列表 */
+.user-list {
+  position: relative;
+  float: left;
+  width: 350px;
+  height: 90%;
+  overflow-y: auto;
+  border-right: 1px solid #DCDFE6;
+}
+.user-row {
+  margin: 0px 0px;
+  border-bottom: 1px solid #DCDFE6;
+  border-right: 10px solid transparent;
+  display: grid;
+  grid-template-columns: 100px 220px;
+  grid-template-rows: 30px 30px 30px;
+  cursor:pointer
+}
+.user-row-img {
+  margin: 15px 15px;
+  grid-row: 1/3;
+}
+.user-name {
+  font-weight: bold;
+  display: inline-grid;
+  grid-template-columns: 120px 100px;
+  grid-template-rows: 30px;
+}
+.user-name label {
+  margin-top: 15px
+}
+.user-nums {
+  margin-top: 15px;
+}
+.user-sign {
+  font-size: 14px;
+  grid-column: 2/3;
+  margin-top: 15px;
+  margin-right: 15px;
+  color: #909399;
+}
+
+.el-dropdown-menu__item {
+  width: 250px;
+  margin: 0px 0px;
+  padding: 0px 0px;
+}
+.load-more {
+  width: 100%;
+  text-align: center;
+  margin: 15px auto;
+}
+.el-collapse-item__Bos >>> .el-collapse-item__header{
+  font-size: 22px !important;
+  height: 90px !important;
+  margin: 0px 0px;
+  padding-left: 30px;
+}
+
+
+
+/* 图片灰色 */
+.imgGray { 
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: #C0C4CC;
+}
+
+
+
+/* 其他人信息 */
+.other-info {
+  position: relative;
+  float: left;
+  width: 950px;
+  height: 90%;
+}
+.other-user {
+  width: 100%;
+  height: 90px;
+  padding: 0px 0px;
+  border-bottom: 1px solid #DCDFE6;
+}
+.other-user-img {
+  margin: 12px 15px;
+}
+.other-user-name {
+  height: 15px;
+  position: relative;
+  bottom: 35px;
+}
+.other-doing {
+  position: relative;
+  float: right;
+  top: 25px;
+  right: 15px;
+}
+.other-doing button {
+  margin-left: 15px;
+}
+.other-uf-img >>> .el-avatar {
+  position: relative;
+  bottom: 25px;
+  margin-left: 6px;
+}
+.heart {
+  background-color: #909399;
+  width: 43px;
+  height: 43px;
+}
+.heart-red {
+  background-color: #ff2525;
+  width: 43px;
+  height: 43px;
+}
+.heart-red:hover {
+  background-color: #fd6565;
+}
+.heart:hover {
+  background-color: #bebebe;
+}
+.heart:active {
+  background-color: #909399;
+}
+
+
+
+.record-content-title {
+  margin: 0px;
+}
+.we-dialog >>> .el-dialog__title {
+  font-weight: bolder;
+}
+
+.rg-options {
+  position: relative;
+  float: left;
+}
+.rg-new-group {
+  min-width: 180px;
+  max-width: 350px;
+  position: relative;
+  float: left;
+  margin: 0px 15px;
+  color: cornflowerblue;
+  cursor: pointer;
+  transition: all 0.4s ease-out;
+}
+.rg-new-ok {
+  position: relative;
+  float: left;
+  margin-right: 15px;
+}
+
+/* 新建日记分组获取焦点时 */
+[contenteditable]:focus {
+  outline: none;
+  border-bottom: 1px solid cornflowerblue;
+  font-size: 30px;
+  cursor: auto;
+}
+
+.info-daily-write {
+  width: 100%;
+  line-height: 48px;
+  text-align: right;
+  position: relative;
+  right: 15px;
+  padding: 15px 0px;
+}
+.info-daily-write >>> .el-button {
+  font-size: 24px;
+  font-weight: bolder;
+}
+.info-dw-b {
+  padding-bottom: 5px;
+  border-bottom: 0.5px solid black;
+}
+
+
+/* 按月显示日记信息 */
+.daily-record-month {
+  min-height: 350px;
+  height: 90%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.daily-record-month >>> .el-timeline {
+  padding: 0px;
+  margin-top: 15px;
+  margin-left: 5px;
+}
+/* .daily-record-month >>> .el-collapse-item__header {
+  line-height: 15px;
+} */
+.dr-month {
+  font-size: 16px;
+  font-weight: bolder;
+}
+
+.dr-collapse >>> .el-collapse-item__header.is-active {
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+
+/* 回复框 */
+.record-footer {
+  position: fixed;
+  bottom: -111px;
+  width: 950px;
+  height: 111px;
+  border-top: 1px solid #DCDFE6;
+  background-color: #EBEEF5;
+  transition: all 1s ease-out;
+}
+.reply-un {
+  position: absolute;
+  left: 25px;
+  top: 10px;
+  float: left;
+  font-size: 18px;
+}
+.discuss-write {
+  width: 750px;
+  position: relative;
+  left: 0px;
+  float: left;
+  padding: 0px 25px;
+  margin: 45px 0px;
+}
+.discuss-write input {
+  width: 100%;
+  background-color: #EBEEF5;
+  border: 0px solid transparent;
+}
+.discuss-write input:hover {
+  background-color: #fff;
+}
+.discuss-submit {
+  width: 111px;
+  height: 100%;
+  position: relative;
+  float: right;
+  line-height: 110px;
+  text-align: center;
+  color: white;
+  background-color: cornflowerblue;
+  cursor: pointer;
+}
+.discuss-submit:hover {
+  opacity: 0.8;
+}
+.discuss-submit span {
+  height: 100%;
+  line-height: 110px;
+  text-align: center;
+}
+.reply-write-show {
+  position: fixed;
+  bottom: 0px;
+  transition: all 0.8s ease-in;
+}

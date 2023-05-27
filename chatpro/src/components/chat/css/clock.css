@@ -1,0 +1,41 @@
+
+.clock {
+  color: #eeeeee;
+  margin-top: 70px;
+  margin-left: 113px;
+  position: relative;
+}
+.clock .hours,
+.clock .minutes,
+.clock .seconds {
+  border-radius: 50%;
+  text-align: center;
+  position: absolute;
+}
+.clock .seconds {
+  width: 66.6666666667px;
+  height: 66.6666666667px;
+  top: 72.6666666667px;
+  left: 72.6666666667px;
+  line-height: 1.5;
+  font-size: 41.203131438px;
+  z-index: 1;
+  background-color: rgba(222, 222, 222, 0.41);
+}
+.clock .minutes {
+  width: 100px;
+  height: 100px;
+  top: 56px;
+  left: 56px;
+  line-height: 1.5;
+  font-size: 61.804697157px;
+  z-index: 2;
+}
+.clock .hours {
+  width: 200px;
+  height: 200px;
+  line-height: 1.5;
+  font-size: 123.609394314px;
+  z-index: 0;
+  border: 6px solid #f4f4f4;
+}

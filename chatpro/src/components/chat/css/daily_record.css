@@ -1,0 +1,211 @@
+
+/* 日记 */
+.record-content, .record-discuss, .record-other {
+  margin-right: 15px;
+  padding: 15px 0px;
+}
+.record-header {
+  margin-right: 15px;
+  padding: 5px 0px;
+  height: 40px;
+  line-height: 30px;
+}
+.record-title {
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-size: 25px;
+  font-weight: bolder;
+}
+.record-time {
+  float: right;
+  right: 0px;
+  text-align: right;
+}
+.record-content {
+  height: auto;
+  min-height: 250px;
+  border-top: 1px solid #DCDFE6;
+  overflow-y: auto;
+}
+.record-other {
+  border-bottom: 1px solid #DCDFE6;
+}
+.discuss-title{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: bolder;
+  color: burlywood;
+}
+.other-num {
+  color: cornflowerblue;
+}
+.other-num label {
+  margin-right: 15px;
+}
+.other-num span {
+  margin-right: 15px;
+  cursor: pointer;
+}
+.record-discuss {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  min-height: 150px;
+}
+
+
+.discuss-list {
+  display: grid;
+  grid-template-rows: minmax(80px, auto);
+  grid-template-columns: 50px auto;
+  margin-top: 15px;
+}
+.discuss-pp {
+  grid-row: 1/1;
+  grid-column: 1/1;
+}
+.discuss-right {
+  grid-row: 1/1;
+  grid-column: 2/2;
+  display: grid;
+  grid-template-rows: minmax(35px, auto);
+  grid-template-columns: auto;
+}
+.discuss-num {
+  grid-row: 1/1;
+  grid-column: 1/1;
+  width: 100%;
+  text-align: right;
+}
+.discuss-num label {
+  position: relative;
+  float: left;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-size: 14px;
+  line-height: 35px;
+  margin-right: 15px;
+  color: #909399;
+}
+.discuss-num span {
+  line-height: 35px;
+}
+.discuss-content {
+  grid-row: 2/2;
+  grid-column: 1/1;
+  min-height: 35px;
+  height: auto;
+  padding-right: 15px;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-size: 16px;
+  font-weight: bolder;
+}
+.discuss-footer {
+  grid-row: 3/3;
+  grid-column: 1/1;
+  padding-top: 10px;
+  text-align: right;
+}
+.discuss-back {
+  grid-row: 4/4;
+  grid-column: 1/1;
+}
+.dis-reply {
+  color: cornflowerblue;
+  cursor: pointer;
+}
+.dis-reply:hover {
+  opacity: 0.8;
+}
+.dis-reply:active {
+  opacity: 1;
+  color: #bebebe;
+}
+.dis-agree {
+  cursor: pointer;
+}
+.dis-agree:hover {
+  opacity: 0.8;
+}
+
+
+.reply-list {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 50px auto;
+  margin-top: 15px;
+}
+.reply-pp {
+  grid-row: 1/1;
+  grid-column: 1/1;
+}
+.reply-right {
+  grid-row: 1/1;
+  grid-column: 2/2;
+  display: grid;
+  grid-template-rows: minmax(35px, auto);
+  grid-template-columns: auto;
+}
+.reply-num {
+  grid-row: 1/1;
+  grid-column: 1/1;
+  width: 100%;
+  text-align: right;
+}
+.reply-num label {
+  position: relative;
+  float: left;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-size: 14px;
+  line-height: 35px;
+  margin-right: 15px;
+  color: #909399;
+}
+.reply-num span {
+  line-height: 35px;
+}
+.reply-content {
+  grid-row: 2/2;
+  grid-column: 1/1;
+  min-height: 35px;
+  height: auto;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-size: 16px;
+  font-weight: bolder;
+}
+.reply-footer {
+  grid-row: 3/3;
+  grid-column: 1/1;
+  padding-top: 10px;
+  text-align: right;
+}
+
+.agree {
+  margin-right: 15px;
+}
+.reply {
+  margin-right: 35px;
+}
+.reply-other {
+  margin: 0px 8px;
+  color: #bebebe;
+  font-size: 16px;
+}
+
+.reply-list >>> .el-divider {
+  grid-row: 2/2;
+  grid-column: 1/3;
+  width: 800px;
+  margin: 8px 15px 8px 0px;
+  padding-right: 15px;
+}
+.reply-expand >>> .el-badge__content  {
+  position: relative;
+  left: -15px;
+}
+.reply-expand-down {
+  cursor: pointer;
+}
+.reply-time {
+  font-size: 14px;
+  font-weight: normal;
+  color: #909399;
+  margin-left: 15px;
+}

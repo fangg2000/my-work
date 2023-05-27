@@ -1,0 +1,18 @@
+@keyframes slide {
+  0% {
+    background-position-x: 0%;
+  }
+  100% {
+    background-position-x: 150px;
+  }
+}
+
+.clip {
+  font-size: 18px;
+  background: repeating-linear-gradient(-45deg, red 0%, yellow 7.14%, lime 14.28%, aqua 21.42%, cyan 28.56%, blue 35.7%, magenta 42.84%, red 50%);
+  background-size: 650px 35px;
+  animation: "slide" 10s infinite linear forwards;
+  -webkit-animation: "slide" 10s infinite linear forwards;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}

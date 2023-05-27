@@ -1,0 +1,48 @@
+.config-header {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  border-bottom: 1px solid #DCDFE6;
+}
+.config-header div {
+  font-size: 22px;
+  font-weight: bolder;
+  margin: 15px auto;
+}
+.config-content {
+  width: 100%;
+  margin: 15px 0px;
+}
+.config-title {
+  width: 80%;
+  margin: 15px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(139, 139, 139);
+}
+.config-row {
+  display: grid;
+  grid-template-rows: 30px;
+  grid-template-columns: 120px auto;
+  margin-right: 15px;
+}
+.row-left {
+  text-align: right;
+}
+.row-left-btn {
+  margin-right: 15px;
+}
+.config-row label {
+  margin: 5px 0px;
+  text-align: left;
+}
+.el-switch {
+  margin: 5px 15px;
+}
+.config-save {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  margin: 35px auto;
+}

@@ -1,0 +1,84 @@
+[speech-bubble], [speech-bubble] * { box-sizing: border-box }
+
+[speech-bubble]{
+  --bbColor: #fff;
+  --bbArrowSize: 1.5rem;
+  --bbBorderRadius: 25px;
+  --bbPadding: 1rem;
+  background: var(--bbColor);
+  border-radius: 25px 0px 25px 0px;
+  padding: var(--bbPadding);
+  position: relative;
+  top: -175px;
+  left: 75px;
+  width: auto !important;
+  height:auto !important;
+  min-width: 260px;
+  min-height: 85px;
+  z-index: 201;
+  display:inline-block;
+  opacity: 1;
+}
+
+[speech-bubble]::before{
+  content: ''; 
+  position: absolute;
+  background: var(--bbColor);
+}
+
+[speech-bubble][pleft]  { margin-left: var(--bbArrowSize); }
+
+/* left and right  */
+[speech-bubble][pleft]::before{
+  --height: calc(var(--bbArrowSize) / 2 * 3);
+  width: var(--bbArrowSize);
+  height: 55px;
+  position: absolute;
+  top: 5px;
+}
+
+.atop {
+  border-radius: 0px 25px 0px 25px;
+}
+
+/* left */
+[speech-bubble][pleft]::before{
+  right: calc(100% - 2px);
+}
+[speech-bubble][pleft].abottom::before{
+  bottom: var(--bbPadding);
+  clip-path: polygon(0 100%, 100% 0, 100% 75%)
+}
+[speech-bubble][pleft].atop::before {
+  top: 0px;
+  clip-path: polygon(0 0, 100% 25%, 100% 100%);
+}
+
+
+
+[speech-bubble]:hover{
+  transform: scale(1.05);
+  filter: 
+    drop-shadow(0px 0px 0.2rem #dbdbdb)
+    drop-shadow(0px 0px 1rem var(--bbColor));
+} 
+
+[speech-bubble] .title{
+  color: #000000; 
+  text-shadow: 1px 1px 2px #8a8a8a;
+  margin:0px;
+  text-align: left;
+  height: auto;
+}
+
+.message-in {
+  position: relative;
+  font-size: 14px;
+  /* 强制换行 */
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap !important;
+  word-break:normal; 
+  display: inline-block;
+  overflow: hidden ;
+}

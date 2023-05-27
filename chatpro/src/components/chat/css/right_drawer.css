@@ -1,0 +1,86 @@
+.right-drawer {
+  width: 100%;
+  height: 100%;
+}
+.el-collapse-item__Bos >>> .el-collapse-item__header{
+  font-size: 18px !important;
+  height: 50px !important;
+  font-weight: bolder;
+  margin: 0px 0px;
+  padding-left: 20px;
+  color: rgb(179, 179, 179);
+}
+.contact-row {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 30px 30px;
+  grid-template-columns: 80px 200px;
+  padding: 5px 0px;
+  border-bottom: 1px solid #DCDFE6;
+  cursor:pointer
+}
+.contact-row:hover {
+  background-color: #F2F6FC;
+}
+.contact-row:active {
+  background-color: #DCDFE6;
+}
+.contact-pp {
+  grid-row: 1/2;
+  margin: 6px 15px;
+}
+.contact-name {
+  margin: 5px 0px;
+  font-weight: bold;
+}
+.contact-time {
+  grid-column: 2/2;
+  font-size: 12px;
+  color: #a3a3a3;
+}
+
+
+/* 图片灰色 */
+.imgGray { 
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: #C0C4CC;
+}
+
+.chat-group-add {
+  padding: 0px 10px;
+  margin: 0px;
+  line-height: 40px;
+  text-align: left;
+  position: relative;
+  top: 25px;
+  background-color: #F2F6FC;
+}
+.chat-group-add span {
+  font-size: 18px;
+}
+.cg-search-more {
+  margin-top: 20px;
+  text-align: center;
+}
+.cg-apply {
+  margin-top: 15px;
+}
+.cg-apply .el-button {
+  margin-top: 15px;
+}
+
+.right-key-menu {
+  width: 120px;
+  position: absolute;
+  margin: 0px !important;
+  padding: 0px !important;
+  display: none;
+  z-index: 10301;
+}
+.right-key-menu >>> .el-menu {
+  background-color: #F2F6FC;
+}

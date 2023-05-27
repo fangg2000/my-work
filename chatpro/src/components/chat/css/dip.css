@@ -1,0 +1,53 @@
+
+  .dip {
+    width:400px;
+    height:200px;
+    position: relative;
+    top: -35px;
+    left: -380px;
+    --c:#cff3ff;
+    --c1:#431a00;
+    background:
+    radial-gradient(farthest-side,#fff 98%,#0000)25.5% 57%/1.2% 2%,
+    radial-gradient(farthest-side,#fff 98%,#0000)36% 57%/1.2% 2%,
+    radial-gradient(farthest-side,#fff 98%,#0000)67% 61%/1.2% 2%,
+    radial-gradient(farthest-side,#fff 98%,#0000)78% 61%/1.2% 2%,
+    radial-gradient(farthest-side,#321300 98%,#0000) 79% 62%/3.5% 7.5%,
+    radial-gradient(farthest-side,#321300 98%,#0000) 68% 62%/3.5% 7.5%,
+    radial-gradient(farthest-side,#321300 98%,#0000) 24% 57.5%/3.5% 7.5%,
+    radial-gradient(farthest-side,#321300 98%,#0000) 35% 57.5%/3.5% 7.5%,
+    radial-gradient(farthest-side at top,#0000 63%,#3a1a03 66% 98%,#0000) 74% 69%/4% 4%,
+    radial-gradient(farthest-side at top,#0000 63%,#3a1a03 66% 98%,#0000) 29.5% 65%/4% 4%,
+    radial-gradient(farthest-side,#eaf8f9 98%,#0000)83% 29%/31% 16%,
+    radial-gradient(farthest-side,#f9fcff 98%,#0000) 80% 86%/23.55% 15%,
+    radial-gradient(50% 152% at top,#f9fcff 98%,#0000) 83% 66%/31% 49%,
+    radial-gradient(farthest-side,#ade8f8 98%,#0000) 83.5% 6%/32% 14%,
+    radial-gradient(farthest-side,var(--c) 98%,#0000) 80.5% 90%/25% 14%,
+    radial-gradient(farthest-side,var(--c) 98%,#0000) 85% 4%/35% 20%,
+    radial-gradient(50% 145% at top,var(--c) 98%,#0000) 85% 46%/35% 73%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 24% 24%/2% 4%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 32% 16%/2% 3%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 29% 38%/2% 4%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 13% 32%/2% 4%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 18% 46%/2% 6%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 15% 64%/3% 4%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 24% 78%/2% 4%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 43% 73%/2% 4%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 41% 34%/2% 5%,
+    radial-gradient(farthest-side,#592901 98%,#0000 ) 48% 54%/2% 4%,
+    radial-gradient(farthest-side,#cd7933 20%, #be7332 98%,#0000) 16% 40%/42% 80%,
+    radial-gradient(farthest-side,var(--c1) 98%,#0000)6.1% 81%/2.5% 6%,
+    radial-gradient(farthest-side,var(--c1) 98%,#0000)93.1% 81%/2.5% 6%,
+    radial-gradient(farthest-side,var(--c1) 98%,#0000)53.4% 81%/3% 6%,
+    radial-gradient(farthest-side,var(--c1) 98%,#0000)24% 99%/3% 4%,
+    radial-gradient(farthest-side,var(--c1) 98%,#0000)35% 99%/3% 4%,
+    radial-gradient(farthest-side,var(--c1) 98%,#0000)79% 99%/3% 4%,
+    radial-gradient(farthest-side,var(--c1) 98%,#0000)69% 99%/3% 4%,
+    linear-gradient(var(--c1) 0 0) 77.5% 97%/1% 16%,
+    linear-gradient(var(--c1) 0 0) 70% 97%/1% 16%,
+    linear-gradient(var(--c1) 0 0) 25.5% 97%/1% 16%,
+    linear-gradient(var(--c1) 0 0) 34% 97%/1% 16%,
+    radial-gradient(farthest-side at bottom, #0000 94%,var(--c1) 94.5% 98%,#0000)87.5% 68%/40% 32%,
+    radial-gradient(farthest-side at bottom, #0000 94%,var(--c1) 94.5% 98%,#0000)12% 68%/48% 42%;
+    background-repeat:no-repeat;
+  }

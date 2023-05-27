@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html.body {
+  background-color: skyblue;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bubble {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.b1 {
+  left: -5%;
+  top: 5%;
+  transform: scale(0, 6);
+  animation: pao 5s linear infinite,direction 3s ease-in-out infinite alternate;
+}
+.b2 {
+  left: -5%;
+  top: 5%;
+  transform: scale(0, 6);
+  animation: pao 8s linear infinite,direction 3s ease-in-out infinite alternate;
+}
+.b3 {
+  left: -5%;
+  top: 5%;
+  transform: scale(0, 6);
+  animation: pao 10s linear infinite,direction 3s ease-in-out infinite alternate;
+}
+.b4 {
+  left: -5%;
+  top: 5%;
+  transform: scale(0, 6);
+  animation: pao 13s linear infinite,direction 3s ease-in-out infinite alternate;
+}
+.b5 {
+  left: -5%;
+  top: 5%;
+  transform: scale(0, 6);
+  animation: pao 15s linear infinite,direction 3s ease-in-out infinite alternate;
+}
+
+@keyframes pao {
+  0% {
+    margin-top: 100%;
+  }
+  100% {
+    margin-top: -100%;
+  }
+}
+
+@keyframes direction {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 50px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
