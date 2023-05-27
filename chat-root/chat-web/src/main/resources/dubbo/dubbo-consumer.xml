@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans        
+        http://www.springframework.org/schema/beans/spring-beans.xsd        
+        http://code.alibabatech.com/schema/dubbo        
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="${dubbo.application}"  />
+    <!-- <dubbo:registry address="multicast://224.5.6.7:1234?unicast=false" /> -->
+    <!--support zk-->
+    <dubbo:registry address="${dubbo.address}" />
+    <!--support nacos-->
+    <!-- <dubbo:registry address="nacos://127.0.0.1:8848"/> -->
+
+    <dubbo:reference id="chatLogService" interface="com.fangg.service.ChatLogService" check="false" async="false" retries="0"/>
+    <dubbo:reference id="sysUserService" interface="com.fangg.service.SysUserService" check="false" async="false" retries="0"/>
+    <dubbo:reference id="companyInfoService" interface="com.fangg.service.CompanyInfoService" check="false" async="false" retries="0"/>
+    <dubbo:reference id="focusUsersService" interface="com.fangg.service.FocusUsersService" check="false" async="false" retries="0"/>
+    <dubbo:reference id="userConfigService" interface="com.fangg.service.UserConfigService" check="false" async="false" retries="0"/>
+    <dubbo:reference id="chatGroupService" interface="com.fangg.service.ChatGroupService" check="false" async="false" retries="0"/>
+    
+    <!-- 日记相关服务 -->
+    <dubbo:reference id="dailyRecordService" interface="com.fangg.service.record.DailyRecordService" check="false" async="false" retries="0"/>
+    <dubbo:reference id="recordGroupService" interface="com.fangg.service.record.RecordGroupService" check="false" async="false" retries="0"/>
+    <dubbo:reference id="discussInfoService" interface="com.fangg.service.record.DiscussInfoService" check="false" async="false" retries="0"/>
+    
+    
+    <dubbo:reference id="blackInfoService" interface="com.fangg.service.BlackInfoService" check="false" async="false" retries="0"/>
+
+</beans>

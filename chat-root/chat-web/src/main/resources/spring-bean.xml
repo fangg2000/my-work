@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd 
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- 开启注解配置 -->
+	<context:annotation-config />
+
+	<!-- 扫描包(service) -->
+	<!-- 	<context:component-scan base-package="com.fangg" /> -->
+	
+	<aop:config proxy-target-class="true"></aop:config>
+
+	<!-- 加载配置属性文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath:application.properties,classpath:dev-config.properties" />
+	
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
+	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
+	
+	<!-- 解决API接口跨域问题配置 Spring MVC 版本必须是 4.2 及以上 -->
+	<!-- <mvc:cors>
+	    <mvc:mapping path="/**"
+	    allowed-origins="*"
+	    allowed-methods="POST, GET, OPTIONS, DELETE, PUT"
+	    allowed-headers="Content-Type, Access-Control-Allow-Headers, ticket, X-Requested-With"
+	    allow-credentials="true"/>
+	</mvc:cors> -->
+	
+	<!-- <import resource="dubbo/dubbo-provide.xml"/> -->
+	<import resource="dubbo/dubbo-consumer.xml"/>
+	<import resource="spring-redis.xml"/>
+	
+</beans>
