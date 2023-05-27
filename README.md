@@ -31,4 +31,4 @@
 	![004](https://github.com/fangg2000/web-chat/assets/131591502/10dec65b-a910-4417-8725-46f67da16feb)
 	![006](https://github.com/fangg2000/web-chat/assets/131591502/486bd8b6-0101-4337-befa-537b084b7894)
 
-
+最后，这个项目花了我差不多半年时光，支持一下吧…
