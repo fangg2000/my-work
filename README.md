@@ -23,6 +23,12 @@
 
 3、聊天信息使用redis进行缓存（这是我做这个项目的初衷）
 
-4、项目使用到了别的一些UP主的代码，主要有：
+4、项目使用到了别的一些UP主的代码，主要有：\n
 	1)泡泡球功能--来自网络kmh0228
 	
+三、效果图如下：
+	![002](https://github.com/fangg2000/web-chat/assets/131591502/f6f16e28-c856-412b-9f7c-2bbba9cef251)
+	![004](https://github.com/fangg2000/web-chat/assets/131591502/10dec65b-a910-4417-8725-46f67da16feb)
+	![006](https://github.com/fangg2000/web-chat/assets/131591502/486bd8b6-0101-4337-befa-537b084b7894)
+
+
